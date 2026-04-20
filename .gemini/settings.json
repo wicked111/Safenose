@@ -1,0 +1,10 @@
+{
+  "security": {
+    "enableConseca": true
+  },
+  "ui": {
+    "footer": {
+      "hideContextPercentage": false
+    }
+  }
+}

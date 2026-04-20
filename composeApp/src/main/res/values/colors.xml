@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background">#F7F7F7</color>
+    <color name="primary">#237E87</color>
+    <color name="primaryAccent">#145A62</color>
+    <color name="secondaryAccent">#F39C12</color>
+    <color name="star_color">#FFD700</color>
+
+
+</resources>
