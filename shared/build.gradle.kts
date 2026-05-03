@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -33,7 +34,10 @@ kotlin {
             implementation(libs.supabase.authenticatoin.handler)
             implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.0.3"))
             implementation("io.insert-koin:koin-core")
-
+            implementation("androidx.lifecycle:lifecycle-viewmodel:2.9.1")
+        }
+        androidMain.dependencies {
+            implementation("io.ktor:ktor-client-okhttp:3.1.3")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

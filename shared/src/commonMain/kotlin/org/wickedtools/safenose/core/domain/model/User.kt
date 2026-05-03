@@ -1,9 +1,11 @@
 package org.wickedtools.safenose.core.domain.model
 
 data class User(
-    val name : String,
-    val age : Int,
-    val email: String?,
+    val id: String,
+    val email: String,
+    val username: String?,
+    val fullName: String?,
     val city: String,
-    val phone: Long?
+    val state: String?,
+    val avatarUrl: String?
 )

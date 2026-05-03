@@ -23,6 +23,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation("androidx.core:core-splashscreen:1.0.1")
             implementation("io.insert-koin:koin-android:4.0.3")
+            implementation("io.insert-koin:koin-androidx-compose:4.0.3")
             implementation("io.coil-kt:coil-compose:2.6.0")
             implementation("androidx.compose.material:material-icons-extended:1.6.8")
 

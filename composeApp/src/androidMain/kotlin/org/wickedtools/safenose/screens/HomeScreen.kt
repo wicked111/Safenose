@@ -3,6 +3,7 @@ package org.wickedtools.safenose.screens
 import android.annotation.SuppressLint
 import org.wickedtools.safenose.components.HomeScreen_LatestReviewsCard
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -13,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.wickedtools.safenose.R
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -60,53 +62,53 @@ import org.wickedtools.safenose.components.HomeScreen_PopularFragranceCard
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true, name = "I love it")
 @Composable
-fun homeScreen(){
+fun HomeScreen(){
+    var selectedItem by remember { mutableStateOf(0) }
 
-    Scaffold(
-        topBar = { SafenoseTopAppBar()},
-        bottomBar ={ SafenoseBottomNav() }
-    ){
+    when (selectedItem) {
+        1 -> AddReviewScreen(onBack = { selectedItem = 0 }, onSubmit = { selectedItem = 0 })
+        2 -> ProfileScreen(selectedItem = selectedItem, onItemSelected = { selectedItem = it })
+        else -> Scaffold(
+            topBar = { SafenoseTopAppBar() },
+            bottomBar = { SafenoseBottomNav(selectedItem = selectedItem, onItemSelected = { selectedItem = it }) }
+        ) {
+            Column(modifier = Modifier.padding(top = 64.dp)) {
+                SimpleSearchBar(
+                    textFieldState = remember { TextFieldState() },
+                    onSearch = {},
+                    searchResults = listOf()
+                )
 
-        Column(modifier = Modifier.padding(top = 64.dp)){
+                Spacer(modifier = Modifier.height(8.dp))
 
-            SimpleSearchBar(
-                textFieldState = remember { TextFieldState() },
-                onSearch = {},
-                searchResults = listOf()
-            )
+                Text(
+                    text = "Popular Fragrances",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(start = 16.dp),
+                    color = colorResource(id = R.color.primaryAccent)
+                )
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-            Text(text = "Popular Fragrances",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(start = 16.dp),
-                color = colorResource(id = R.color.primaryAccent)
-            )
+                PopularFragrance()
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-            PopularFragrance()
+                Text(
+                    text = "Latest Reviews",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(start = 16.dp, bottom = 8.dp),
+                    color = colorResource(id = R.color.primaryAccent)
+                )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(text = "Latest Reviews ",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(start = 16.dp, bottom = 8.dp),
-                color = colorResource(id = R.color.primaryAccent)
-            )
-
-            LazyColumn {
-                items(10) {
-                    HomeScreen_LatestReviewsCard("https://picsum.photos/id/22/200/300")
-
+                LazyColumn {
+                    items(10) {
+                        HomeScreen_LatestReviewsCard("https://picsum.photos/id/22/200/300")
+                    }
                 }
             }
-
-
-
-
         }
     }
 }
@@ -135,8 +137,7 @@ fun SafenoseTopAppBar() {
 }
 
 @Composable
-fun SafenoseBottomNav() {
-    var selectedItem by remember { mutableStateOf(0) }
+fun SafenoseBottomNav(selectedItem: Int, onItemSelected: (Int) -> Unit) {
     val items = listOf("Home", "Add Review", "Profile")
     val icons = listOf(Icons.Default.Home, Icons.Default.Edit, Icons.Default.Person)
 
@@ -146,9 +147,8 @@ fun SafenoseBottomNav() {
                 icon = { Icon(icons[index], contentDescription = item) },
                 label = { Text(item) },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index },
+                onClick = { onItemSelected(index) },
                 colors = NavigationBarItemDefaults.colors(
-
                     selectedIconColor = colorResource(R.color.primary),
                     unselectedIconColor = Color.Black,
                     selectedTextColor = colorResource(R.color.primary),
@@ -240,6 +240,7 @@ fun PopularFragrance(){
     }
 
 }
+
 
 
 
